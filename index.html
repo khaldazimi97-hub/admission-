@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسیر پیشرفت | یادگیری برنامه‌نویسی برای ساختن آینده</title>
+    
+    <!-- فونت‌های فارسی زیبا -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Peyda:wght@400;700;900&family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ------------------- */
+        /* متغیرهای اصلی (رنگ‌ها، فونت‌ها و افکت‌ها) */
+        /* ------------------- */
+        :root {
+            --primary-color: #0d47a1; /* آبی تیره و عمیق */
+            --secondary-color: #1e88e5; /* آبی روشن‌تر */
+            --accent-color: #ff4081; /* صورتی انرژی‌بخش و مدرن */
+            --dark-bg: #121212;
+            --light-bg-color: #f5f5f5;
+            --white-color: #ffffff;
+            --text-color: #333;
+            --text-light: #b0bec5;
+            --heading-font: 'Peyda', sans-serif;
+            --body-font: 'Vazirmatn', sans-serif;
+            --border-radius: 12px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ------------------- */
+        /* ریست‌کردن و استایل‌های پایه */
+        /* ------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--text-color);
+            line-height: 1.7;
+            background-color: var(--white-color);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--heading-font);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        /* ------------------- */
+        /* انیمیشن‌های پایه */
+        /* ------------------- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ------------------- */
+        /* هدر و بخش اصلی (Hero) */
+        /* ------------------- */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary-color) 100%);
+            color: var(--white-color);
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TODO: لوگوی خود را اینجا قرار دهید */
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px auto;
+            background: url('logo.png') no-repeat center center/contain;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-color), #f50057);
+            color: var(--white-color);
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 64, 129, 0.6);
+        }
+
+        /* ------------------- */
+        /* بخش معرفی ما (درباره تیم) */
+        /* ------------------- */
+        #about {
+            background-color: var(--light-bg-color);
+        }
+        
+        .team-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            font-size: 1.2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .team-member {
+            background: var(--white-color);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .team-member:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .member-photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            margin: 0 auto 25px auto;
+            border: 5px solid var(--secondary-color);
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* TODO: برای هر عضو تیم یک کلاس جداگانه با تصویرش بسازید */
+        .member-photo.instructor { background-image: url('khalid.png'); }
+        
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* ------------------- */
+        /* بخش معرفی دوره (Course Details) */
+        /* ------------------- */
+        #course {
+            background-color: var(--white-color);
+        }
+        
+        .course-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .course-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-left: 50%;
+            padding-right: 0;
+        }
+
+        .timeline-content {
+            background: var(--light-bg-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border: 4px solid var(--white-color);
+            border-radius: 50%;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ------------------- */
+        /* بخش ثبت‌نام (Registration) */
+        /* ------------------- */
+        #register {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            text-align: center;
+        }
+
+        #register .section-title {
+            color: var(--white-color);
+        }
+
+        .registration-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            font-family: var(--body-font);
+            font-size: 1rem;
+            background-color: rgba(255,255,255,0.9);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px var(--accent-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* استایل چک‌باکس سفارشی */
+        .checkbox-group {
+            text-align: right;
+            margin: 30px 0;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--white-color);
+            border-radius: 4px;
+            margin-right: 0;
+            margin-top: 3px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-checkbox {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked + .custom-checkbox::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--white-color);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .checkbox-wrapper label {
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            background: linear-gradient(45deg, var(--accent-color), #f50057);
+            color: var(--white-color);
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 64, 129, 0.6);
+        }
+
+        /* ------------------- */
+        /* فوتر */
+        /* ------------------- */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        /* ------------------- */
+        /* رسپانسیو (واکنش‌گرا) */
+        /* ------------------- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            section { padding: 60px 0; }
+            .course-timeline::before { left: 30px; }
+            .timeline-item, .timeline-item:nth-child(even) {
+                padding-left: 80px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+            .timeline-dot { left: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== -->
+    <!-- بخش اصلی و هدر (Hero Section) -->
+    <!-- ==================== -->
+    <header class="hero">
+        <div class="hero-content container">
+            <div class="logo"></div>
+            <h1>با کدنویسی، آینده خودت رو بساز</h1>
+            <p>ما به زنان و دختران افغان ابزار لازم برای استقلال و خلق کردن فرصت‌های جدید را یاد می‌دهیم. به جامعه ما بپیوندید و مهارتی برای زندگی یاد بگیرید.</p>
+            <a href="#register" class="cta-button">همین حالا ثبت‌نام کن</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ==================== -->
+        <!-- بخش معرفی ما (About Us) -->
+        <!-- ==================== -->
+        <section id="about">
+            <div class="container fade-in">
+                <h2 class="section-title">ما تیمی با اشتیاق و با تجربه هستیم</h2>
+                <p class="team-intro">
+                    ما فقط مدرس نیستیم؛ ما مربی، همراه و حامی شما هستیم. باور داریم که تکنولوژی می‌تواند پلی برای رسیدن به رویاها باشد و مأموریت ما این است که این پل را برای شما بسازیم. هر کدام از ما سال‌ها در صنعت وب فعالیت کرده و حالا اشتیاقمان را برای آموزش به شما اختصاص داده‌ایم.
+                </p>
+                <div class="team-grid">
+                    <!-- TODO: اطلاعات تیم خود را اینجا قرار دهید -->
+                    <div class="team-member fade-in">
+                        <div class="member-photo instructor"></div>
+                        <h3>خالد عظیمی</h3>
+                        <p>مربی اصلی و بنیان‌گذار دوره با ۳ سال سابقه کار</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== -->
+        <!-- بخش معرفی دوره (Course Details) -->
+        <!-- ==================== -->
+        <section id="course">
+            <div class="container">
+                <h2 class="section-title fade-in">سفر ۴ ماهه شما به دنیای وب</h2>
+                <div class="course-timeline">
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-content">
+                            <h3><i class="fas fa-code"></i> ماه اول: بنیان‌های وب</h3>
+                            <p>با HTML ساختار صفحات وب را می‌سازیم و با CSS به آن‌ها رنگ و روح می‌بخشیم. در پایان این ماه، شما قادر خواهید بود صفحات وب استاتیک و زیبا طراحی کنید.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-content">
+                            <h3><i class="fas fa-palette"></i> ماه دوم: طراحی حرفه‌ای</h3>
+                            <p>اصول پیشرفته CSS مانند Flexbox و Grid را برای ساخت چیدمان‌های پیچیده و واکنش‌گرا (ریسپانسیو) یاد می‌گیریم تا سایت شما در تمام دستگاه‌ها عالی به نظر برسد.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-content">
+                            <h3><i class="fas fa-laptop-code"></i> ماه سوم: جان بخشیدن به وب</h3>
+                            <p>با جاوا اسکریپت، به صفحات خود هوش و تعامل می‌بخشیم. فرم‌ها را مدیریت می‌کنیم، انیمیشن‌های جذاب می‌سازیم و اپلیکیشن‌های وب ساده خلق می‌کنیم.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-content">
+                            <h3><i class="fas fa-rocket"></i> ماه چهارم: پروژه نهایی</h3>
+                            <p>تمام دانش خود را به کار می‌گیریم و یک وب‌سایت پورتفولیوی کامل و حرفه‌ای از صفر می‌سازیم تا با یک نمونه کار قوی، اولین قدم را برای ورود به بازار کار بردارید.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== -->
+        <!-- بخش ثبت‌نام (Registration) -->
+        <!-- ==================== -->
+        <section id="register">
+            <div class="container fade-in">
+                <h2 class="section-title">آماده‌ای اولین قدم رو برداری؟</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 40px;">جای شما در این دوره خالی است. فرم زیر را با دقت پر کنید تا به سرعت با شما تماس بگیریم.</p>
+                
+                <!-- TODO: لینک Formspree خود را در action قرار دهید -->
+                <form action="https://formspree.io/f/mzzodpye" method="POST" class="registration-form">
+                    <input type="hidden" name="_subject" value="پیام جدید از وب‌سایت برای ثبت نام Innovators Nation">
+                    <div class="form-group">
+                        <label for="name">نام و نام خانوادگی</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">سن</label>
+                        <input type="number" id="age" name="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">شهر / ولایت</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="education">درجه تحصیلی</label>
+                        <select id="education" name="education" required>
+                            <option value="">لطفا انتخاب کنید</option>
+                            <option value="شاگرد">شاگرد</option>
+                            <option value="۱۴ پاس">۱۴ پاس </option>
+                            <option value="محصل">محصل</option>
+                            <option value="ماستر">ماستری</option>
+                            <option value="دکترا">دکترا</option>
+                            <option value="other">سایر</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">ایمیل</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">شماره واتساپ فعال (با کد کشور)</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" placeholder="مثال: +93700XXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">آیا قبلاً تجربه برنامه‌نویسی دارید؟</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">لطفا انتخاب کنید</option>
+                            <option value="no">خیر، کاملاً مبتدی هستم.</option>
+                            <option value="some">بله، کمی اطلاعات دارم.</option>
+                            <option value="yes">بله، در سطح متوسط کار کرده‌ام.</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="motivation">چرا می‌خواهید در این دوره شرکت کنید؟</label>
+                        <textarea id="motivation" name="motivation" placeholder="برای ما بنویسید که چه چیزی شما را به این دوره کشانده است..."></textarea>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="confirmation" name="confirmation" required>
+                            <div class="custom-checkbox"></div>
+                            <label for="confirmation">من تصدیق می‌کنم که توانایی اشتراک در صنف آنلاین که در واتساپ و گوگل میت برگزار می‌شود را دارم و در صورت عدم اشتراک، نهاد حق حذف من از دوره را دارد.</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-button">ثبت‌نام در دوره</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== -->
+    <!-- فوتر -->
+    <!-- ==================== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 - تمام حقوق برای تیم "ملت نو اوران" محفوظ است.</p>
+            <p>ساخته شده توسط تیم توسعه ملت نو اوران</p>
+            <!-- TODO: لینک شبکه‌های اجتماعی خود را اضافه کنید -->
+            <a href="https://www.facebook.com/share/1ANsKRSTd5/"><i class="fab fa-facebook"></i></a>
+            <a href="www.linkedin.com/in/khalid-azimi-99baa5395"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/khal.idazimi?igsh=MWJuZGp3aGpmeGF1eQ=="><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // اسکریپت برای انیمیشن اسکرول
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
